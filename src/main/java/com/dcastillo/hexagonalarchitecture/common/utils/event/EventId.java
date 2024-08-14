@@ -7,11 +7,11 @@ public record EventId(UUID id) {
         if (id == null) throw new NullPointerException("EventId cannot be null");
     }
 
-    public static EventId fromString(String id) {
+    public static EventId fromString(final String id) {
         return new EventId(UUID.fromString(id));
     }
 
-    public static EventId of(UUID id) {
+    public static EventId of(final UUID id) {
         return new EventId(id);
     }
 

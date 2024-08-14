@@ -7,11 +7,11 @@ public record CommandId(UUID id) {
         if (id == null) throw new NullPointerException("CommandId cannot be null");
     }
 
-    public static CommandId from(String id) {
+    public static CommandId from(final String id) {
         return new CommandId(UUID.fromString(id));
     }
 
-    public static CommandId of(UUID id) {
+    public static CommandId of(final UUID id) {
         return new CommandId(id);
     }
 
