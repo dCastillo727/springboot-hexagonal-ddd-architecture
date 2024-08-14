@@ -1,4 +1,4 @@
-package com.dcastillo.hexagonalarchitecture.core.utils.annotations.adapter;
+package com.dcastillo.hexagonalarchitecture.common.utils.annotations.adapter;
 
 import java.lang.annotation.*;
 
