@@ -6,8 +6,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class BcryptPasswordEncryptor implements PasswordEncryptor {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public BcryptPasswordEncryptor(BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    public BcryptPasswordEncryptor() {
+        this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
     }
 
     @Override
