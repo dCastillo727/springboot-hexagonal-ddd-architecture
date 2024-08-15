@@ -1,16 +1,17 @@
-package com.dcastillo.hexagonalarchitecture.layers.infraestructure.adapter.driven.persistence.jpa.user.dbo;
+package com.dcastillo.hexagonalarchitecture.layers.infraestructure.adapter.driven.persistence.jpa.user.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
 @Table(name = "user")
 @Getter
 @Setter
-public class UserJpaDbo {
+public class UserJpaEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -26,5 +27,5 @@ public class UserJpaDbo {
 
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
-    private RoleJpaDbo role;
+    private RoleJpaEntity role;
 }

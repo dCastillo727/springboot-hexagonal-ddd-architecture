@@ -7,7 +7,6 @@ import com.dcastillo.hexagonalarchitecture.layers.domain.command.user.RegisterUs
 import com.dcastillo.hexagonalarchitecture.layers.domain.event.user.UserInfoChangedEvent;
 import com.dcastillo.hexagonalarchitecture.layers.domain.event.user.UserRegisteredEvent;
 import com.dcastillo.hexagonalarchitecture.layers.domain.model.user.role.Role;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Singular;
 
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Builder
 @Getter
 public class User implements AggregateDomainEvent {
     @Singular
@@ -54,28 +52,24 @@ public class User implements AggregateDomainEvent {
             final String password,
             final Role role
     ) {
-        return User.builder()
-                .userId(userId)
-                .emailAddress(emailAddress)
-                .username(username)
-                .password(password)
-                .role(role)
-                .build();
+        return new User(userId, emailAddress, username, password, role);
     }
 
     public static User registerBy(final RegisterUserCommand command) {
         if (command == null) throw new NullPointerException("RegisterUserCommand cannot be null");
 
         final UserId userId = UserId.generate();
+        final User user = new User(
+                userId,
+                command.emailAddress(),
+                command.username(),
+                command.password(),
+                command.role()
+        );
 
-        return User.builder()
-                .userId(userId)
-                .emailAddress(command.emailAddress())
-                .username(command.username())
-                .password(command.password())
-                .role(command.role())
-                .event(UserRegisteredEvent.issue(userId))
-                .build();
+        user.listEvents().add(UserRegisteredEvent.issue(userId));
+
+        return user;
     }
 
     public User changeInfoBy(final ChangeUserInfoCommand command) {

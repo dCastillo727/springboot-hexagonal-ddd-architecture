@@ -18,4 +18,8 @@ public record UserId(String id) {
     public String asString() {
         return id;
     }
+
+    public UUID asUUID() {
+        return UUID.fromString(id);
+    }
 }

@@ -1,4 +1,4 @@
-package com.dcastillo.hexagonalarchitecture.layers.domain.repository.user;
+package com.dcastillo.hexagonalarchitecture.layers.application.port.driven.persistence.repository.user;
 
 import com.dcastillo.hexagonalarchitecture.layers.domain.model.user.EmailAddress;
 import com.dcastillo.hexagonalarchitecture.layers.domain.model.user.User;
@@ -7,7 +7,7 @@ import com.dcastillo.hexagonalarchitecture.layers.domain.model.user.UserId;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository {
+public interface UserRepositoryDrivenPort {
     User changeUserInfo(User user);
 
     List<User> findAllBy(

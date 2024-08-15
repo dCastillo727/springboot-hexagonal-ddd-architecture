@@ -1,12 +1,14 @@
 package com.dcastillo.hexagonalarchitecture.layers.infraestructure.providers.encryptors;
 
 import com.dcastillo.hexagonalarchitecture.layers.domain.utilities.PasswordEncryptor;
+import lombok.Getter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-public class BcryptPasswordEncryptor implements PasswordEncryptor {
+@Getter
+public class BcryptPasswordEncryptorProvider implements PasswordEncryptor {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public BcryptPasswordEncryptor() {
+    public BcryptPasswordEncryptorProvider() {
         this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
     }
 
