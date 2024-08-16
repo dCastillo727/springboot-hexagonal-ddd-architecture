@@ -1,7 +1,7 @@
 package com.dcastillo.hexagonalarchitecture.layers.infraestructure.adapter.driven.persistence.jpa.user;
 
 import com.dcastillo.hexagonalarchitecture.common.utils.annotations.adapter.DrivenAdapter;
-import com.dcastillo.hexagonalarchitecture.common.utils.exceptions.UserNotFoundException;
+import com.dcastillo.hexagonalarchitecture.common.utils.exceptions.user.UserNotFoundException;
 import com.dcastillo.hexagonalarchitecture.layers.domain.model.user.EmailAddress;
 import com.dcastillo.hexagonalarchitecture.layers.domain.model.user.User;
 import com.dcastillo.hexagonalarchitecture.layers.domain.model.user.UserId;

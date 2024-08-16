@@ -1,4 +1,4 @@
 package com.dcastillo.hexagonalarchitecture.common.utils.event;
 
-public interface ApplicationEvent {
+public interface ApplicationEvent extends Event {
 }

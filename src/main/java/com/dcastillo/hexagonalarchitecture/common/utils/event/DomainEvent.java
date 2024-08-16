@@ -1,4 +1,4 @@
 package com.dcastillo.hexagonalarchitecture.common.utils.event;
 
-public interface DomainEvent {
+public interface DomainEvent extends Event {
 }

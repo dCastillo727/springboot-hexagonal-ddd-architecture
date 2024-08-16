@@ -1,15 +1,19 @@
 package com.dcastillo.hexagonalarchitecture.layers.infraestructure.configuration;
 
 import com.dcastillo.hexagonalarchitecture.layers.domain.utilities.PasswordEncryptor;
-import com.dcastillo.hexagonalarchitecture.layers.infraestructure.providers.authentication.AuthUserDetailsService;
+import com.dcastillo.hexagonalarchitecture.layers.infraestructure.providers.authentication.AuthUserDetailsServiceProvider;
 import com.dcastillo.hexagonalarchitecture.layers.infraestructure.providers.encryptors.BcryptPasswordEncryptorProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -17,20 +21,42 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final AuthUserDetailsService authUserDetailsService;
+    private final AuthUserDetailsServiceProvider authUserDetailsServiceProvider;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http,
+            AuthenticationProvider authenticationProvider
+    ) throws Exception {
         return http
-                .authenticationProvider(authenticationProvider())
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(authorizeRequests ->
+                    authorizeRequests
+                            .requestMatchers("/v1/auth/login").permitAll()
+                            .requestMatchers("/v1/auth/register").permitAll()
+                            .anyRequest().authenticated()
+                )
+                .sessionManagement(sessionManagement ->
+                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .authenticationProvider(authenticationProvider)
                 .build();
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider() {
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration authenticationConfiguration
+    ) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider(
+            PasswordEncoder passwordEncoder
+    ) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(authUserDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
+        authProvider.setUserDetailsService(authUserDetailsServiceProvider);
+        authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }
 
@@ -40,8 +66,10 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        BcryptPasswordEncryptorProvider encryptor = (BcryptPasswordEncryptorProvider) passwordEncryptor();
+    public PasswordEncoder passwordEncoder(
+            PasswordEncryptor passwordEncryptor
+    ) {
+        BcryptPasswordEncryptorProvider encryptor = (BcryptPasswordEncryptorProvider) passwordEncryptor;
         return encryptor.getBCryptPasswordEncoder();
     }
 }

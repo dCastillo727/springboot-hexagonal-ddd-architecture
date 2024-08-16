@@ -8,7 +8,7 @@ import com.dcastillo.hexagonalarchitecture.layers.domain.event.user.UserInfoChan
 import com.dcastillo.hexagonalarchitecture.layers.domain.event.user.UserRegisteredEvent;
 import com.dcastillo.hexagonalarchitecture.layers.domain.model.user.role.Role;
 import lombok.Getter;
-import lombok.Singular;
+import lombok.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,6 @@ import java.util.Objects;
 
 @Getter
 public class User implements AggregateDomainEvent {
-    @Singular
     private final List<DomainEvent> events;
     private final UserId userId;
     private EmailAddress emailAddress;
@@ -25,18 +24,12 @@ public class User implements AggregateDomainEvent {
     private Role role;
 
     public User(
-            final UserId userId,
-            final EmailAddress emailAddress,
-            final String username,
-            final String password,
-            final Role role
+            @NonNull final UserId userId,
+            @NonNull final EmailAddress emailAddress,
+            @NonNull final String username,
+            @NonNull final String password,
+            @NonNull final Role role
     ) {
-        Objects.requireNonNull(userId);
-        Objects.requireNonNull(emailAddress);
-        Objects.requireNonNull(username);
-        Objects.requireNonNull(password);
-        Objects.requireNonNull(role);
-
         this.events = new ArrayList<>();
         this.userId = userId;
         this.emailAddress = emailAddress;

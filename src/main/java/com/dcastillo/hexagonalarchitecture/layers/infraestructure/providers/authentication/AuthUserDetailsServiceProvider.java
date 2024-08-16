@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthUserDetailsService implements UserDetailsService {
+public class AuthUserDetailsServiceProvider implements UserDetailsService {
     private final UserRepositoryDrivenPort userRepositoryDrivenPort;
 
     @Override
