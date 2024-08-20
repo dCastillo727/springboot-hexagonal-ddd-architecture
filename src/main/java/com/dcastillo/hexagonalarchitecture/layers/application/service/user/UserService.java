@@ -52,11 +52,13 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase {
             throw new UserAlreadyExistsException("Email address already exists");
 
         final User user = User.registerBy(command);
+        user.setPassword(passwordEncryptor.encrypt(command.password()));
         repository.save(user);
 
         messagePublisher.publish(user.listEvents());
         user.clearEvents();
 
+        user.setPassword(command.password());
         return user;
     }
 }

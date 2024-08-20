@@ -5,6 +5,7 @@ import com.dcastillo.hexagonalarchitecture.layers.application.service.user.UserS
 import com.dcastillo.hexagonalarchitecture.layers.domain.model.user.User;
 import com.dcastillo.hexagonalarchitecture.layers.infraestructure.adapter.driver.authentication.AuthenticationDriverAdapter;
 import com.dcastillo.hexagonalarchitecture.layers.infraestructure.adapter.driver.rest.user.dto.request.UserLoginFormDto;
+import com.dcastillo.hexagonalarchitecture.layers.infraestructure.adapter.driver.rest.user.dto.request.UserRegisterFormDto;
 import com.dcastillo.hexagonalarchitecture.layers.infraestructure.adapter.driver.rest.user.dto.response.UserResponseDto;
 import com.dcastillo.hexagonalarchitecture.layers.infraestructure.adapter.driver.rest.user.mapper.UserDtoMapper;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("api/auth")
 @DriverAdapter
 @RequiredArgsConstructor
 public class UserControllerDriverAdapter {
@@ -32,8 +33,16 @@ public class UserControllerDriverAdapter {
         User user = userService.login(loginForm.getUsername(), loginForm.getPassword());
         authenticationDriverAdapter.authenticate(user);
 
-        return new ResponseEntity<>(userDtoMapper.toUserResponseDto(user) ,HttpStatus.OK);
+        return new ResponseEntity<>(userDtoMapper.toUserResponseDto(user), HttpStatus.OK);
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<UserResponseDto> register(@RequestBody UserRegisterFormDto registerForm) {
+        if (!registerForm.isValid()) throw new BadCredentialsException("Invalid register request");
 
+        User user = userService.registerUser(userDtoMapper.toRegisterUserCommand(registerForm));
+        authenticationDriverAdapter.authenticate(user);
+
+        return new ResponseEntity<>(userDtoMapper.toUserResponseDto(user), HttpStatus.CREATED);
+    }
 }
