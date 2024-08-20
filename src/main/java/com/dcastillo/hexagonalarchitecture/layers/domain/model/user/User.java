@@ -9,12 +9,13 @@ import com.dcastillo.hexagonalarchitecture.layers.domain.event.user.UserRegister
 import com.dcastillo.hexagonalarchitecture.layers.domain.model.user.role.Role;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Getter
+@Setter
 public class User implements AggregateDomainEvent {
     private final List<DomainEvent> events;
     private final UserId userId;
@@ -60,7 +61,7 @@ public class User implements AggregateDomainEvent {
                 command.role()
         );
 
-        user.listEvents().add(UserRegisteredEvent.issue(userId));
+        user.events.add(UserRegisteredEvent.issue(userId));
 
         return user;
     }

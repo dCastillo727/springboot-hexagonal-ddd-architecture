@@ -10,4 +10,9 @@ public record UserInfoChangedEvent(EventId eventId, Instant registeredAt, UserId
     public static UserInfoChangedEvent issue(final UserId userId) {
         return new UserInfoChangedEvent(EventId.generate(), Instant.now(), userId);
     }
+
+    @Override
+    public EventId getId() {
+        return eventId;
+    }
 }

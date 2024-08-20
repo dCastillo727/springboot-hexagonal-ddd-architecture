@@ -3,6 +3,8 @@ package com.dcastillo.hexagonalarchitecture.layers.infraestructure.adapter.drive
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -13,7 +15,7 @@ import java.util.UUID;
 @Setter
 public class UserJpaEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
     private UUID id;
 
     @Column(name = "email_address", unique = true, nullable = false)
@@ -27,5 +29,6 @@ public class UserJpaEntity implements Serializable {
 
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private RoleJpaEntity role;
 }
