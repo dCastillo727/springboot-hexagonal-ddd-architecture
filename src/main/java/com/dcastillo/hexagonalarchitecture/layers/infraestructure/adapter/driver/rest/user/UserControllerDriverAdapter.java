@@ -31,6 +31,7 @@ public class UserControllerDriverAdapter {
         if (!loginForm.isValid()) throw new BadCredentialsException("Invalid username or password");
 
         User user = userService.login(loginForm.getUsername(), loginForm.getPassword());
+        user.setPassword(loginForm.getPassword());
         authenticationDriverAdapter.authenticate(user);
 
         return new ResponseEntity<>(userDtoMapper.toUserResponseDto(user), HttpStatus.OK);
