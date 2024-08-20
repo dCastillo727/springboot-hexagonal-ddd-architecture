@@ -46,6 +46,6 @@ the project follow your needs.
 * [IntelliJ Idea Ultimate](https://www.jetbrains.com/idea/) - Development IDE
 
 ## Authors ✒️
-* **David Alejandro Castillo Prieto** - *Software Engineer Student* and *Flutter Developer* - [davcast2000@gmail.com](davcast2000@gmail.com)
+* **David Alejandro Castillo Prieto** - *Software Engineer Student* and *Flutter Developer* - [davcast2000@gmail.com](mailto:davcast2000@gmail.com?subject=[Github]%20SpringBoot%20Hexagonal%20DDD%20Architecture%20Repository)
 
 [Spring Boot logo]: https://media.licdn.com/dms/image/D4D12AQFscCu_T0xB3A/article-cover_image-shrink_600_2000/0/1688794846091?e=2147483647&v=beta&t=W6FiJ_ZGjTh79I8xtLZZ8_-zu58OQb-fcB3cNbc2dZw
