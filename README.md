@@ -40,10 +40,10 @@ You can add a .env file and follow base definition of properties or just change 
 the project follow your needs.
 
 ## Built with 🛠️
-* [Spring Boot]() - The Java Backend development framework used
-* [Apache Kafka]() - The Messages manager to communicate with microservices
-* [PostgreSQL]() - The used database
-* [IntelliJ Idea Ultimate]() - Development IDE
+* [Spring Boot](https://spring.io/projects/spring-boot) - The Java Backend development framework used
+* [Apache Kafka](https://kafka.apache.org) - The Messages manager to communicate with microservices
+* [PostgreSQL](https://www.postgresql.org) - The used database
+* [IntelliJ Idea Ultimate](https://www.jetbrains.com/idea/) - Development IDE
 
 ## Authors ✒️
 * **David Alejandro Castillo Prieto** - *Software Engineer Student* and *Flutter Developer* - [davcast2000@gmail.com](davcast2000@gmail.com)
