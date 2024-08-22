@@ -3,5 +3,7 @@ package com.dcastillo.hexagonalarchitecture.layers.application.port.driver.authe
 import com.dcastillo.hexagonalarchitecture.layers.domain.model.user.User;
 
 public interface AuthenticationDriverPort {
-    void authenticate(User user);
+    void login(String username, String password);
+    void logout();
+    User getSessionUser();
 }

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/auth")
 @DriverAdapter
 @RequiredArgsConstructor
-public class UserControllerDriverAdapter {
+public class AuthUserControllerDriverAdapter {
     private final UserDtoMapper userDtoMapper;
     private final UserService userService;
     private final AuthenticationDriverAdapter authenticationDriverAdapter;
@@ -30,9 +30,8 @@ public class UserControllerDriverAdapter {
     public ResponseEntity<UserResponseDto> login(@RequestBody UserLoginFormDto loginForm) {
         if (!loginForm.isValid()) throw new BadCredentialsException("Invalid username or password");
 
-        User user = userService.login(loginForm.getUsername(), loginForm.getPassword());
-        user.setPassword(loginForm.getPassword());
-        authenticationDriverAdapter.authenticate(user);
+        authenticationDriverAdapter.login(loginForm.getUsername(), loginForm.getPassword());
+        User user = authenticationDriverAdapter.getSessionUser();
 
         return new ResponseEntity<>(userDtoMapper.toUserResponseDto(user), HttpStatus.OK);
     }
@@ -42,7 +41,8 @@ public class UserControllerDriverAdapter {
         if (!registerForm.isValid()) throw new BadCredentialsException("Invalid register request");
 
         User user = userService.registerUser(userDtoMapper.toRegisterUserCommand(registerForm));
-        authenticationDriverAdapter.authenticate(user);
+        authenticationDriverAdapter.login(user.getUsername(), registerForm.getPassword());
+        user = authenticationDriverAdapter.getSessionUser();
 
         return new ResponseEntity<>(userDtoMapper.toUserResponseDto(user), HttpStatus.CREATED);
     }
