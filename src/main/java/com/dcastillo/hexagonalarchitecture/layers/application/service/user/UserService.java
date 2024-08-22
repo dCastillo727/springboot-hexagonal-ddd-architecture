@@ -5,7 +5,6 @@ import com.dcastillo.hexagonalarchitecture.common.utils.exceptions.user.UserNotF
 import com.dcastillo.hexagonalarchitecture.common.utils.exceptions.user.WrongUserCredentialsException;
 import com.dcastillo.hexagonalarchitecture.layers.application.port.driven.messaging.MessagePublisher;
 import com.dcastillo.hexagonalarchitecture.layers.application.port.driven.persistence.repository.user.UserRepositoryDrivenPort;
-import com.dcastillo.hexagonalarchitecture.layers.application.port.driver.rest.user.usecase.UserLoginUseCase;
 import com.dcastillo.hexagonalarchitecture.layers.application.port.driver.rest.user.usecase.UserRegisterUseCase;
 import com.dcastillo.hexagonalarchitecture.layers.domain.command.user.RegisterUserCommand;
 import com.dcastillo.hexagonalarchitecture.layers.domain.model.user.User;
@@ -20,24 +19,10 @@ import java.util.Optional;
 @Service
 @Transactional(isolation = Isolation.READ_COMMITTED)
 @RequiredArgsConstructor
-public class UserService implements UserRegisterUseCase, UserLoginUseCase {
+public class UserService implements UserRegisterUseCase {
     private final UserRepositoryDrivenPort repository;
     private final PasswordEncryptor passwordEncryptor;
     private final MessagePublisher messagePublisher;
-
-    @Override
-    public User login(String username, String password) {
-        Optional<User> user = repository.findByUsername(username);
-
-        if (user.isEmpty())
-            throw new UserNotFoundException("User not found");
-
-        boolean checkPassword = passwordEncryptor.matches(password, user.get().getPassword());
-
-        if (!checkPassword) throw new WrongUserCredentialsException("Wrong password or username");
-
-        return user.get();
-    }
 
     @Override
     public User registerUser(RegisterUserCommand command) {
@@ -58,7 +43,6 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase {
         messagePublisher.publish(user.listEvents());
         user.clearEvents();
 
-        user.setPassword(command.password());
         return user;
     }
 }

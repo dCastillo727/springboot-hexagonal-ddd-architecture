@@ -1,6 +1,7 @@
 package com.dcastillo.hexagonalarchitecture.layers.infraestructure.providers.authentication;
 
 import com.dcastillo.hexagonalarchitecture.layers.domain.model.user.User;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -8,8 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
+@Getter
 @RequiredArgsConstructor
 public class AuthUserDetails implements UserDetails {
     private final User user;
@@ -53,4 +54,5 @@ public class AuthUserDetails implements UserDetails {
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
+
 }
