@@ -30,8 +30,7 @@ public class AuthUserControllerDriverAdapter {
     public ResponseEntity<UserResponseDto> login(@RequestBody UserLoginFormDto loginForm) {
         if (!loginForm.isValid()) throw new BadCredentialsException("Invalid username or password");
 
-        authenticationDriverAdapter.login(loginForm.getUsername(), loginForm.getPassword());
-        User user = authenticationDriverAdapter.getSessionUser();
+        User user = authenticationDriverAdapter.login(loginForm.getUsername(), loginForm.getPassword());
 
         return new ResponseEntity<>(userDtoMapper.toUserResponseDto(user), HttpStatus.OK);
     }
@@ -41,8 +40,7 @@ public class AuthUserControllerDriverAdapter {
         if (!registerForm.isValid()) throw new BadCredentialsException("Invalid register request");
 
         User user = userService.registerUser(userDtoMapper.toRegisterUserCommand(registerForm));
-        authenticationDriverAdapter.login(user.getUsername(), registerForm.getPassword());
-        user = authenticationDriverAdapter.getSessionUser();
+        user = authenticationDriverAdapter.login(user.getUsername(), registerForm.getPassword());
 
         return new ResponseEntity<>(userDtoMapper.toUserResponseDto(user), HttpStatus.CREATED);
     }

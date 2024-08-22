@@ -1,9 +1,7 @@
 package com.dcastillo.hexagonalarchitecture.layers.application.service.user;
 
 import com.dcastillo.hexagonalarchitecture.common.utils.exceptions.user.UserAlreadyExistsException;
-import com.dcastillo.hexagonalarchitecture.common.utils.exceptions.user.UserNotFoundException;
-import com.dcastillo.hexagonalarchitecture.common.utils.exceptions.user.WrongUserCredentialsException;
-import com.dcastillo.hexagonalarchitecture.layers.application.port.driven.messaging.MessagePublisher;
+import com.dcastillo.hexagonalarchitecture.layers.application.port.driven.messaging.LoggerPublisher;
 import com.dcastillo.hexagonalarchitecture.layers.application.port.driven.persistence.repository.user.UserRepositoryDrivenPort;
 import com.dcastillo.hexagonalarchitecture.layers.application.port.driver.rest.user.usecase.UserRegisterUseCase;
 import com.dcastillo.hexagonalarchitecture.layers.domain.command.user.RegisterUserCommand;
@@ -22,7 +20,7 @@ import java.util.Optional;
 public class UserService implements UserRegisterUseCase {
     private final UserRepositoryDrivenPort repository;
     private final PasswordEncryptor passwordEncryptor;
-    private final MessagePublisher messagePublisher;
+    private final LoggerPublisher loggerPublisher;
 
     @Override
     public User registerUser(RegisterUserCommand command) {
@@ -40,7 +38,7 @@ public class UserService implements UserRegisterUseCase {
         user.setPassword(passwordEncryptor.encrypt(command.password()));
         repository.save(user);
 
-        messagePublisher.publish(user.listEvents());
+        loggerPublisher.publish(user.listEvents());
         user.clearEvents();
 
         return user;

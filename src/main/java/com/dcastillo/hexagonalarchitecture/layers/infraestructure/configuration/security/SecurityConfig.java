@@ -1,4 +1,4 @@
-package com.dcastillo.hexagonalarchitecture.layers.infraestructure.configuration;
+package com.dcastillo.hexagonalarchitecture.layers.infraestructure.configuration.security;
 
 import com.dcastillo.hexagonalarchitecture.layers.domain.utilities.PasswordEncryptor;
 import com.dcastillo.hexagonalarchitecture.layers.infraestructure.providers.authentication.AuthUserDetailsServiceProvider;
