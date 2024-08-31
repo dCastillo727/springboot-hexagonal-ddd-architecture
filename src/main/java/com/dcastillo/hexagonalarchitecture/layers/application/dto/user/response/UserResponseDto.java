@@ -1,4 +1,4 @@
-package com.dcastillo.hexagonalarchitecture.layers.infraestructure.adapter.driver.rest.user.dto.response;
+package com.dcastillo.hexagonalarchitecture.layers.application.dto.user.response;
 
 import lombok.*;
 

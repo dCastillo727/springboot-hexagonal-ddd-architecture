@@ -1,5 +1,6 @@
 package com.dcastillo.hexagonalarchitecture.layers.application.port.driven.persistence.repository.user;
 
+import com.dcastillo.hexagonalarchitecture.common.utils.annotations.port.DrivenPort;
 import com.dcastillo.hexagonalarchitecture.layers.domain.model.user.EmailAddress;
 import com.dcastillo.hexagonalarchitecture.layers.domain.model.user.User;
 import com.dcastillo.hexagonalarchitecture.layers.domain.model.user.UserId;
@@ -7,6 +8,7 @@ import com.dcastillo.hexagonalarchitecture.layers.domain.model.user.UserId;
 import java.util.List;
 import java.util.Optional;
 
+@DrivenPort
 public interface UserRepositoryDrivenPort {
     User changeUserInfo(User user);
 

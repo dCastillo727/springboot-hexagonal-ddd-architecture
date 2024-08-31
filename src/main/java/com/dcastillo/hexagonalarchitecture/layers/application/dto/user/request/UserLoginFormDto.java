@@ -1,4 +1,4 @@
-package com.dcastillo.hexagonalarchitecture.layers.infraestructure.adapter.driver.rest.user.dto.request;
+package com.dcastillo.hexagonalarchitecture.layers.application.dto.user.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.micrometer.common.util.StringUtils;
